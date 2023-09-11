@@ -1,27 +1,23 @@
 # A little tiny AGI sandbox experiment
 
-## 2D World Simulation with Agents
+## 2D Simulation Environment for Language AI
 Initial setup: https://chat.openai.com/share/ee423a94-edcf-49f2-b125-fa448cd2f6de
 
-This project simulates a 2D environment where objects and agents (playable or NPC) exist. It uses HTML5 Canvas for rendering and is written in JavaScript.
+This project is a browser-based 2D simulation environment designed to interact with a language AI model. Within the environment, various objects and agents co-exist and are rendered on a canvas. The primary aim is to allow the language AI to control agents through text commands while generating detailed descriptions of the agent's perspective and surroundings.
 
 ## Features
 
-- **Canvas Rendering**: Renders a 2D world on a 1024x1024 canvas, scaling to fit the screen.
-- **Agent Interaction**: Agents can be clicked to become the 'selected' agent. A white circle and yellow field-of-view arc indicate the selected agent.
-- **World Objects and Agents**: Objects and agents can have customizable shapes, sizes, and colors.
-- **Field of View**: Each agent has a 120-degree FOV and can only see objects and agents within 200 units.
-- **Textual Description**: Each agent generates a detailed text description of its environment, which can be displayed for testing.
-- **Debugging Canvas**: A separate 200x200 canvas provides a debug view from the selected agent's perspective.
+- **Canvas Rendering**: Utilizes HTML5 canvas for rendering objects, agents, and their interactions.
+- **Object and Agent Classes**: Uses JavaScript classes to define generic objects and special agents, all of which can be rendered, positioned, and manipulated within the 2D world.
+- **Customizable Traits**: Objects and agents can have various shapes, sizes, and colors.
+- **Agent Perspective**: Special methods allow for the calculation of an agent's perspective, taking into account their direction, field of view, and distance from other entities.
+- **Language AI Integration**: Designed to be controlled via a language AI model, which receives text-based descriptions of an agent's perspective and environment.
+- **Debugging View**: Includes a secondary canvas that shows the world from a selected agent's perspective for debugging purposes.
 
-## Components
+## Use Cases
 
-- `index.html`: The main HTML file containing canvas elements and script references.
-- `styles.css`: Contains all the styling information, including canvas positioning and debug canvas.
-- `world.js`: The main script that sets up the game loop and rendering logic.
-- `Agent.js`: Defines the `Agent` class with methods for sensing the world and managing states.
-- `WorldObject.js`: Defines the `WorldObject` class for creating customizable shapes.
+- **Simulation**: Simulate complex scenarios that agents controlled by language AI can navigate.
+- **Training**: Serve as a platform to train language models in spatial understanding and command-based tasks.
+- **Gaming**: Can be extended to implement simple 2D games where the player interacts through natural language.
+- **AI Research**: Can be a tool for exploring the capabilities and limitations of AI in understanding and interacting with spatial environments.
 
-## Functionality Awaiting Implementation
-
-- More detailed text descriptions for the language AI.
