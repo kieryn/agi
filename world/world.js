@@ -1,5 +1,8 @@
 // world.js
 
+const worldCanvasSize = 1024;
+
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -19,20 +22,21 @@ function renderDebugView(selectedAgent, objects, agents) {
 
   // Draw the yellow FOV arc (Fixed to be upwards)
   debugCtx.beginPath();
-  debugCtx.moveTo(100, 200);
-  debugCtx.arc(100, 200, 100, Math.PI * 5 / 6, Math.PI * 7 / 6);
-  debugCtx.lineTo(100, 200);
+  debugCtx.moveTo(200, 200);
+  debugCtx.arc(200, 200, 200,  (Math.PI / 180) * (-90-Agent.fieldOfView/2), (Math.PI / 180) * (-90+Agent.fieldOfView/2));
+
+  debugCtx.lineTo(200, 200);
   debugCtx.closePath();
   debugCtx.strokeStyle = "yellow";
   debugCtx.stroke();
 
   // Translating and rotating coordinates for objects and agents
   objects.concat(agents).forEach(entity => {
-    if (selectedAgent.isWithinDistance(entity, 200) && selectedAgent.isWithinFOV(entity, 120)) {
+    if (selectedAgent.isWithinDistance(entity, Agent.viewDistance) && selectedAgent.isWithinFOV(entity, Agent.fieldOfView)) {
       const [dx, dy] = selectedAgent.getRelativeCoordinates(entity);
 
       // Scale down coordinates for debug view
-      const x = dx / 1 + 100;
+      const x = dx + 200;
       const y = 200 - dy / 1; 
 
       // Draw rectangles for simplicity

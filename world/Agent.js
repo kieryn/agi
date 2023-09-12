@@ -1,6 +1,6 @@
 // Agent.js
-
 class Agent extends WorldObject {
+  
   constructor(x, y, path, direction, color) {
     super(x, y, path, color);
     this.direction = direction;
@@ -20,10 +20,18 @@ class Agent extends WorldObject {
     // Agents can have more sophisticated behaviors
   }
 
-  getRelativeCoordinates(other) {
-    const dx = other.x - this.x;
-    const dy = other.y - this.y;
-    return [dx, dy];
+  getRelativeCoordinates(entity) {
+    const dx = entity.x - this.x;
+    const dy = entity.y - this.y;
+  
+    // Convert direction from degrees to radians
+    const directionInRadians = -this.direction * (Math.PI / 180);
+  
+    // Rotate coordinates to match agent's direction
+    const dx_rotated = Math.cos(-directionInRadians) * dx - Math.sin(-directionInRadians) * dy;
+    const dy_rotated = Math.sin(-directionInRadians) * dx + Math.cos(-directionInRadians) * dy;
+  
+    return [dx_rotated, dy_rotated];
   }
 
   isWithinDistance(other, distance) {
@@ -31,11 +39,23 @@ class Agent extends WorldObject {
     return Math.sqrt(dx * dx + dy * dy) <= distance;
   }
 
-  isWithinFOV(other, fov) {
-    const [dx, dy] = this.getRelativeCoordinates(other);
-    const angle = (Math.atan2(dy, dx) - this.direction * (Math.PI / 180)) % (2 * Math.PI);
-    const halfFOV = fov * 0.5 * (Math.PI / 180);
-    return angle >= -halfFOV && angle <= halfFOV;
+
+  isWithinFOV(entity, fovDegrees) {
+    const [dx_rotated, dy_rotated] = this.getRelativeCoordinates(entity);
+    
+    // Return false if the object is right on top of the agent
+    if (dx_rotated === 0 && dy_rotated === 0) {
+      return false;
+    }
+    
+    // Calculate the angle in radians
+    const angle = Math.atan2(dy_rotated, dx_rotated) - Math.PI / 2;
+    
+    // Convert FOV to radians
+    const fovRadians = fovDegrees * (Math.PI / 180);
+    
+    // Check if the angle is within the FOV
+    return angle >= -fovRadians / 2 && angle <= fovRadians / 2;
   }
 
   getBoundaryDistance() {
@@ -49,7 +69,7 @@ class Agent extends WorldObject {
     const descriptions = [];
   
     objects.concat(agents).forEach(entity => {
-      if (this.isWithinDistance(entity, 200) && this.isWithinFOV(entity, 120)) {
+      if (this.isWithinDistance(entity, Agent.viewDistance) && this.isWithinFOV(entity, Agent.fieldOfView)) {
         const [dx, dy] = this.getRelativeCoordinates(entity);
         const distance = Math.sqrt(dx * dx + dy * dy);
         const boundingBox = entity.getBoundingBox();
@@ -65,7 +85,7 @@ class Agent extends WorldObject {
     });
   
     const boundaryDistance = this.getBoundaryDistance();
-    if (boundaryDistance < 200) {
+    if (boundaryDistance < Agent.viewDistance) {
       const boundaryDescription = `The boundary of the world is ${boundaryDistance.toFixed(2)} units away.`;
       descriptions.push(boundaryDescription);
     }
@@ -74,3 +94,5 @@ class Agent extends WorldObject {
   }
 }
 
+Agent.viewDistance = 200;
+Agent.fieldOfView = 120;
