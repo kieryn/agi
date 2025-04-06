@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Creature Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    #worldCanvas {
+      background: #fff;
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+
+    #logTitle {
+      font-weight: bold;
+      margin: 20px 0 0 0;
+    }
+
+    #logContainer {
+      width: 80%;
+      margin: 0 auto;
+      height: 300px;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      text-align: left;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="worldCanvas" width="800" height="500"></canvas>
+  <div id="logTitle"></div>
+  <div id="logContainer"></div>
+
+  <script>
+    // Configuration
+    const NUM_CREATURES = 10;
+    const CREATURE_RADIUS = 12;
+    const MAX_SPEED = 3;     // Maximum movement speed
+    const SIM_DURATION = 20000; // 20 seconds
+    const COLLISION_LOG_COOLDOWN = 50; // ms to prevent flood of collision logs
+
+    // Global references
+    const canvas = document.getElementById("worldCanvas");
+    const ctx = canvas.getContext("2d");
+    const logTitle = document.getElementById("logTitle");
+    const logContainer = document.getElementById("logContainer");
+
+    let creatures = [];
+    let logMessages = [];
+    let running = true;
+    let lastFrameTime = 0;
+
+    // Simple function to push a new event into the log
+    function logEvent(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = `[${timestamp}] ${message}`;
+      logMessages.push(entry);
+      console.log(entry); // For debugging/console view
+    }
+
+    // Creature class
+    class Creature {
+      constructor(id, x, y, dx, dy, color) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.color = color;
+        this.radius = CREATURE_RADIUS;
+
+        // Just to reduce collision event spam, track last time we logged a collision
+        this.lastCollisionLogTime = 0;
+      }
+
+      update(dt) {
+        // Move the creature
+        this.x += this.dx * dt;
+        this.y += this.dy * dt;
+
+        // Bounce off walls
+        if (this.x < this.radius && this.dx < 0) {
+          this.dx = -this.dx;
+          logEvent(`Creature ${this.id} bounced off the left wall!`);
+        } else if (this.x > canvas.width - this.radius && this.dx > 0) {
+          this.dx = -this.dx;
+          logEvent(`Creature ${this.id} bounced off the right wall!`);
+        }
+
+        if (this.y < this.radius && this.dy < 0) {
+          this.dy = -this.dy;
+          logEvent(`Creature ${this.id} bounced off the top wall!`);
+        } else if (this.y > canvas.height - this.radius && this.dy > 0) {
+          this.dy = -this.dy;
+          logEvent(`Creature ${this.id} bounced off the bottom wall!`);
+        }
+      }
+
+      checkCollision(other, currentTime) {
+        // Basic circle collision
+        const distX = other.x - this.x;
+        const distY = other.y - this.y;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+        if (distance < this.radius + other.radius) {
+          // Bounce them by reversing direction
+          [this.dx, other.dx] = [other.dx, this.dx];
+          [this.dy, other.dy] = [other.dy, this.dy];
+
+          // Log collision (cooldown to avoid spam)
+          if (currentTime - this.lastCollisionLogTime > COLLISION_LOG_COOLDOWN) {
+            logEvent(`Creature ${this.id} collided with Creature ${other.id}!`);
+            this.lastCollisionLogTime = currentTime;
+          }
+        }
+      }
+
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    // Initialize creatures with random positions, velocities, colors
+    function initCreatures() {
+      for (let i = 0; i < NUM_CREATURES; i++) {
+        const x = Math.random() * (canvas.width - 2 * CREATURE_RADIUS) + CREATURE_RADIUS;
+        const y = Math.random() * (canvas.height - 2 * CREATURE_RADIUS) + CREATURE_RADIUS;
+        const dx = (Math.random() * 2 - 1) * MAX_SPEED;
+        const dy = (Math.random() * 2 - 1) * MAX_SPEED;
+        // Random color generator
+        const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+        creatures.push(new Creature(i, x, y, dx, dy, color));
+      }
+      logEvent(`Created ${NUM_CREATURES} creatures in the world.`);
+    }
+
+    // The main update + render loop
+    function animate(timestamp) {
+      if (!running) return;
+
+      // Calculate delta time in "pixels per frame" style for consistent movement
+      const deltaTime = (timestamp - lastFrameTime) / 16.6667; // 16.6667 ms ~ 60 FPS
+      lastFrameTime = timestamp;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update creatures
+      creatures.forEach((creature) => {
+        creature.update(deltaTime);
+      });
+
+      // Check collisions
+      const now = performance.now();
+      for (let i = 0; i < creatures.length; i++) {
+        for (let j = i + 1; j < creatures.length; j++) {
+          creatures[i].checkCollision(creatures[j], now);
+        }
+      }
+
+      // Draw creatures
+      creatures.forEach((creature) => {
+        creature.draw(ctx);
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    // End the simulation after 30 seconds
+    function endSimulation() {
+      running = false;
+      logEvent("Simulation ended.");
+      displayLog();
+    }
+
+    // Display the captured log after simulation ends
+    function displayLog() {
+      logTitle.innerText = "Story Log of the Simulation:";
+      logContainer.innerHTML = "";
+      logMessages.forEach((msg) => {
+        const p = document.createElement("p");
+        p.textContent = msg;
+        logContainer.appendChild(p);
+      });
+    }
+
+    // Start up
+    initCreatures();
+    requestAnimationFrame(animate);
+
+    // Stop after 30 seconds
+    setTimeout(endSimulation, SIM_DURATION);
+  </script>
+</body>
+</html>

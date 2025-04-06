@@ -1,0 +1,8 @@
+personas:
+  "minimalist_agent.md":
+    text: true
+    image: false
+
+  "fun_agent.md":
+    text: false
+    image: true

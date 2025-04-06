@@ -1,0 +1,78 @@
+[10:48:45 AM] Created 10 creatures in the world.
+[10:48:46 AM] Creature 1 bounced off the top wall!
+[10:48:46 AM] Creature 6 bounced off the bottom wall!
+[10:48:46 AM] Creature 9 bounced off the bottom wall!
+[10:48:46 AM] Creature 8 bounced off the bottom wall!
+[10:48:46 AM] Creature 6 bounced off the left wall!
+[10:48:47 AM] Creature 7 bounced off the top wall!
+[10:48:47 AM] Creature 5 bounced off the left wall!
+[10:48:47 AM] Creature 2 bounced off the left wall!
+[10:48:47 AM] Creature 9 bounced off the right wall!
+[10:48:47 AM] Creature 1 collided with Creature 7!
+[10:48:47 AM] Creature 3 bounced off the right wall!
+[10:48:48 AM] Creature 5 bounced off the top wall!
+[10:48:48 AM] Creature 0 collided with Creature 6!
+[10:48:48 AM] Creature 1 collided with Creature 8!
+[10:48:49 AM] Creature 1 collided with Creature 6!
+[10:48:49 AM] Creature 2 bounced off the bottom wall!
+[10:48:49 AM] Creature 2 collided with Creature 8!
+[10:48:49 AM] Creature 9 bounced off the top wall!
+[10:48:50 AM] Creature 0 bounced off the top wall!
+[10:48:50 AM] Creature 7 bounced off the left wall!
+[10:48:50 AM] Creature 2 bounced off the bottom wall!
+[10:48:50 AM] Creature 0 collided with Creature 9!
+[10:48:50 AM] Creature 1 bounced off the left wall!
+[10:48:50 AM] Creature 7 bounced off the bottom wall!
+[10:48:50 AM] Creature 6 bounced off the top wall!
+[10:48:51 AM] Creature 4 bounced off the right wall!
+[10:48:51 AM] Creature 0 collided with Creature 8!
+[10:48:51 AM] Creature 1 collided with Creature 3!
+[10:48:52 AM] Creature 1 collided with Creature 6!
+[10:48:52 AM] Creature 1 collided with Creature 2!
+[10:48:52 AM] Creature 6 bounced off the left wall!
+[10:48:52 AM] Creature 9 bounced off the right wall!
+[10:48:53 AM] Creature 9 bounced off the bottom wall!
+[10:48:53 AM] Creature 8 bounced off the bottom wall!
+[10:48:53 AM] Creature 1 bounced off the top wall!
+[10:48:54 AM] Creature 2 collided with Creature 8!
+[10:48:54 AM] Creature 2 bounced off the left wall!
+[10:48:54 AM] Creature 0 bounced off the top wall!
+[10:48:54 AM] Creature 5 bounced off the right wall!
+[10:48:54 AM] Creature 7 bounced off the top wall!
+[10:48:55 AM] Creature 8 bounced off the bottom wall!
+[10:48:55 AM] Creature 8 bounced off the left wall!
+[10:48:55 AM] Creature 1 bounced off the left wall!
+[10:48:55 AM] Creature 7 collided with Creature 9!
+[10:48:56 AM] Creature 1 collided with Creature 8!
+[10:48:56 AM] Creature 6 bounced off the top wall!
+[10:48:56 AM] Creature 7 bounced off the top wall!
+[10:48:56 AM] Creature 2 collided with Creature 7!
+[10:48:57 AM] Creature 3 bounced off the right wall!
+[10:48:57 AM] Creature 5 bounced off the bottom wall!
+[10:48:57 AM] Creature 7 bounced off the top wall!
+[10:48:57 AM] Creature 8 bounced off the bottom wall!
+[10:48:58 AM] Creature 6 bounced off the right wall!
+[10:48:58 AM] Creature 9 bounced off the bottom wall!
+[10:48:58 AM] Creature 0 bounced off the right wall!
+[10:48:58 AM] Creature 4 collided with Creature 7!
+[10:48:58 AM] Creature 2 bounced off the left wall!
+[10:48:59 AM] Creature 0 collided with Creature 9!
+[10:48:59 AM] Creature 1 bounced off the top wall!
+[10:48:59 AM] Creature 0 bounced off the right wall!
+[10:48:59 AM] Creature 2 bounced off the bottom wall!
+[10:49:00 AM] Creature 1 collided with Creature 8!
+[10:49:00 AM] Creature 9 bounced off the bottom wall!
+[10:49:00 AM] Creature 1 bounced off the top wall!
+[10:49:00 AM] Creature 4 bounced off the bottom wall!
+[10:49:01 AM] Creature 4 bounced off the right wall!
+[10:49:01 AM] Creature 5 bounced off the left wall!
+[10:49:02 AM] Creature 0 bounced off the top wall!
+[10:49:03 AM] Creature 2 bounced off the top wall!
+[10:49:03 AM] Creature 6 bounced off the left wall!
+[10:49:03 AM] Creature 8 bounced off the bottom wall!
+[10:49:03 AM] Creature 3 bounced off the left wall!
+[10:49:03 AM] Creature 1 collided with Creature 8!
+[10:49:04 AM] Creature 8 bounced off the bottom wall!
+[10:49:04 AM] Creature 3 bounced off the top wall!
+[10:49:04 AM] Creature 4 bounced off the top wall!
+[10:49:05 AM] Simulation ended.
